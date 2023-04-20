@@ -3,6 +3,7 @@ package dev.ardijorganxhi.listenify.controller;
 import dev.ardijorganxhi.listenify.entity.Artist;
 import dev.ardijorganxhi.listenify.model.PagingResult;
 import dev.ardijorganxhi.listenify.model.dto.ArtistDto;
+import dev.ardijorganxhi.listenify.model.dto.SongDto;
 import dev.ardijorganxhi.listenify.model.dto.UserDto;
 import dev.ardijorganxhi.listenify.model.request.ArtistRequest;
 import dev.ardijorganxhi.listenify.model.request.PaginationRequest;
@@ -43,6 +44,11 @@ public class ArtistController {
     @PostMapping("/{id}/songs")
     private void registerSong(@RequestBody SongRequest request, @PathVariable Long id) {
         songService.registerSong(request, id);
+    }
+
+    @GetMapping("/{id}/songs")
+    private ResponseEntity<PagingResult<SongDto>> getSongsByArtistId(@PathVariable Long id, PaginationRequest request) {
+        return ResponseEntity.ok(artistService.findSongsByArtistId(id, request));
     }
 
 }

@@ -11,6 +11,7 @@ import dev.ardijorganxhi.listenify.model.request.SongRequest;
 import dev.ardijorganxhi.listenify.repository.ArtistRepository;
 import dev.ardijorganxhi.listenify.repository.ArtistSpecification;
 import dev.ardijorganxhi.listenify.repository.SongRepository;
+import dev.ardijorganxhi.listenify.repository.SongSpecification;
 import dev.ardijorganxhi.listenify.utils.PaginationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,10 +31,10 @@ public class SongService {
 
     public PagingResult<SongDto> findAllSongs(PaginationRequest request) {
         final Pageable pageable = PaginationUtils.getPageable(request.getPage(), request.getSize(), request.getDirection(), request.getSortField());
-        final Specification<Artist> specification = ArtistSpecification.getArtists();
+        final Specification<Song> specification = SongSpecification.getSongs();
         final Page<Song> songPage = songRepository.findAll(specification, pageable);
-        final List<SongDto> artists = songPage.stream().map(songMapper::toDto).toList();
-        return new PagingResult<>(artists,
+        final List<SongDto> songs = songPage.stream().map(songMapper::toDto).toList();
+        return new PagingResult<>(songs,
                 songPage.getTotalPages(),
                 songPage.getTotalElements(),
                 songPage.getSize(),
@@ -41,6 +42,7 @@ public class SongService {
                 songPage.isEmpty());
 
     }
+
 
     public void registerSong(SongRequest request, Long artistId) {
         Artist artist = artistRepository.findById(artistId).orElseThrow();

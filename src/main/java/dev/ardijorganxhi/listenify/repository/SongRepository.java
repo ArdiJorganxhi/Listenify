@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SongRepository extends JpaRepository<Song, Long> {
 
-    Page<Song> findAll(Specification<Artist> spec, Pageable pageable);
+    Page<Song> findAll(Specification<Song> spec, Pageable pageable);
 }
