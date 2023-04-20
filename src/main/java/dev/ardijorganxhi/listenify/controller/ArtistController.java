@@ -6,7 +6,9 @@ import dev.ardijorganxhi.listenify.model.dto.ArtistDto;
 import dev.ardijorganxhi.listenify.model.dto.UserDto;
 import dev.ardijorganxhi.listenify.model.request.ArtistRequest;
 import dev.ardijorganxhi.listenify.model.request.PaginationRequest;
+import dev.ardijorganxhi.listenify.model.request.SongRequest;
 import dev.ardijorganxhi.listenify.service.ArtistService;
+import dev.ardijorganxhi.listenify.service.SongService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class ArtistController {
 
     private final ArtistService artistService;
+    private final SongService songService;
 
     @GetMapping("/list")
     private ResponseEntity<PagingResult<ArtistDto>> findAllArtists(PaginationRequest request) {
@@ -28,13 +31,18 @@ public class ArtistController {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<ArtistDto> getArtist(@PathVariable Long id) {
+    private ResponseEntity<ArtistDto> getArtist(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(artistService.findById(id));
     }
 
     @DeleteMapping("/{id}")
     private void deleteArtistById(@PathVariable Long id){
         artistService.deleteById(id);
+    }
+
+    @PostMapping("/{id}/songs")
+    private void registerSong(@RequestBody SongRequest request, @PathVariable Long id) {
+        songService.registerSong(request, id);
     }
 
 }
