@@ -4,11 +4,10 @@ import lombok.*;
 
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-public class UserDto {
+public class SongDto {
 
     private Long id;
-    private String listenifyname;
+    private String name;
 }

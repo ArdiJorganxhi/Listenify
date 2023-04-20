@@ -13,8 +13,7 @@ public class UserMapper {
     public UserDto toDto(User user) {
         return UserDto.builder()
                 .id(user.getId())
-                .name(user.getName())
-                .surname(user.getSurname())
+                .listenifyname(user.getListenifyname())
                 .build();
     }
 

@@ -12,21 +12,23 @@ import java.util.Collection;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
-    private String surname;
+    private String listenifyname;
+
     @Column(nullable = false)
     private String email;
+
     @Column(nullable = false)
     private String password;
+
     private boolean deleted = false;
 
     @Override

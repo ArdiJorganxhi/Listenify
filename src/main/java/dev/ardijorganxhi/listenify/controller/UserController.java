@@ -25,12 +25,12 @@ public class UserController {
     }
 
     @GetMapping
-    private ResponseEntity<UserDto> getProfile() {
+    private ResponseEntity<UserDto> getProfile() throws Exception {
         return ResponseEntity.ok(userService.findById(Long.valueOf(MDC.get(MdcConstant.X_USER_ID))));
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+    private ResponseEntity<UserDto> getUserById(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(userService.findById(id));
     }
 

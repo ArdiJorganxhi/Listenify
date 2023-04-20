@@ -4,12 +4,9 @@ import lombok.*;
 
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-public class RegisterRequest {
+public class ArtistRequest {
 
     private String listenifyname;
-    private String email;
-    private String password;
 }

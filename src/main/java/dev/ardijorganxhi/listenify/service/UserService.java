@@ -20,6 +20,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -39,7 +41,7 @@ public class UserService implements UserDetailsService {
         final Pageable pageable = PaginationUtils.getPageable(request.getPage(), request.getSize(), request.getDirection(), request.getSortField());
         final Specification<User> specification = UserSpecification.getActiveUsers();
         final Page<User> userPage = userRepository.findAll(specification, pageable);
-        final List<UserDto> users = userMapper.listToDto(userRepository.findAll());
+        final List<UserDto> users = userPage.stream().map(userMapper::toDto).toList();
         return new PagingResult<>(users,
                 userPage.getTotalPages(),
                 userPage.getTotalElements(),
@@ -48,9 +50,15 @@ public class UserService implements UserDetailsService {
                 userPage.isEmpty());
 
     }
-    public UserDto findById(Long id) {
+
+    public UserDto findById(Long id) throws Exception {
         User user = userRepository.findById(id).orElseThrow();
-        return userMapper.toDto(user);
+        if(!user.isDeleted()) {
+            return userMapper.toDto(user);
+        } else {
+            throw new Exception("User doesn't exist!");
+        }
+
     }
 
     public void deleteUserById(Long id) {

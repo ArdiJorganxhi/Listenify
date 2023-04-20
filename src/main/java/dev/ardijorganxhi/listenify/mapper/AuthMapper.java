@@ -12,8 +12,7 @@ public class AuthMapper {
     private final PasswordEncoder passwordEncoder;
     public User register(RegisterRequest request) {
         return User.builder()
-                .name(request.getName())
-                .surname(request.getSurname())
+                .listenifyname(request.getListenifyname())
                 .email(request.getEmail())
                 .password(passwordEncoder.bCryptPasswordEncoder().encode(request.getPassword()))
                 .build();
