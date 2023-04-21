@@ -5,7 +5,6 @@ import dev.ardijorganxhi.listenify.entity.Song;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
-
 import javax.persistence.criteria.Join;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

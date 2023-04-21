@@ -1,8 +1,10 @@
 package dev.ardijorganxhi.listenify.controller;
 
 import dev.ardijorganxhi.listenify.model.PagingResult;
+import dev.ardijorganxhi.listenify.model.dto.PlaylistDto;
 import dev.ardijorganxhi.listenify.model.dto.UserDto;
 import dev.ardijorganxhi.listenify.model.request.PaginationRequest;
+import dev.ardijorganxhi.listenify.service.PlaylistService;
 import dev.ardijorganxhi.listenify.service.UserService;
 import dev.ardijorganxhi.listenify.utils.MdcConstant;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final PlaylistService playlistService;
 
     @GetMapping("/list")
     private ResponseEntity<PagingResult<UserDto>> findAllUsers(PaginationRequest request) {
@@ -37,5 +40,10 @@ public class UserController {
     @DeleteMapping("/{id}")
     private void deleteUserById(@PathVariable Long id) {
         userService.deleteUserById(id);
+    }
+
+    @GetMapping("/{id}/playlists")
+    private ResponseEntity<PagingResult<PlaylistDto>> getPlaylists(@PathVariable Long id, PaginationRequest request) {
+        return ResponseEntity.ok(playlistService.getPlaylists(id, request));
     }
 }
