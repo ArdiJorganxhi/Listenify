@@ -1,6 +1,8 @@
 package dev.ardijorganxhi.listenify.repository;
 
 import dev.ardijorganxhi.listenify.entity.Playlist;
+import dev.ardijorganxhi.listenify.entity.Song;
+import dev.ardijorganxhi.listenify.entity.SongPlaylist;
 import dev.ardijorganxhi.listenify.entity.User;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -19,6 +21,16 @@ public class PlaylistSpecification {
             Predicate userPredicate = cb.equal(userJoin.get("id"), userId);
             Predicate deletedPredicate = cb.isFalse(root.get("deleted"));
             return cb.and(userPredicate, deletedPredicate);
+        };
+    }
+
+    public static Specification<Song> getSongs(Long playlistId) {
+        return (root, query, cb) -> {
+          Join<Song, SongPlaylist> songPlaylistJoin = root.join("playlists");
+          Join<SongPlaylist, Playlist> playlistJoin = songPlaylistJoin.join("playlist");
+          Predicate songPredicate = cb.equal(playlistJoin.get("id"), playlistId);
+          Predicate deletedPredicate = cb.isFalse(root.get("deleted"));
+          return cb.and(songPredicate, deletedPredicate);
         };
     }
 }

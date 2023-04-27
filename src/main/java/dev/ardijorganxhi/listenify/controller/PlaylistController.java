@@ -1,11 +1,15 @@
 package dev.ardijorganxhi.listenify.controller;
 
+import dev.ardijorganxhi.listenify.model.PagingResult;
+import dev.ardijorganxhi.listenify.model.dto.SongDto;
+import dev.ardijorganxhi.listenify.model.request.PaginationRequest;
 import dev.ardijorganxhi.listenify.model.request.PlaylistRequest;
 import dev.ardijorganxhi.listenify.service.PlaylistService;
 import dev.ardijorganxhi.listenify.service.SongPlaylistService;
 import dev.ardijorganxhi.listenify.utils.MdcConstant;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.MDC;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,5 +38,10 @@ public class PlaylistController {
     @DeleteMapping("/{playlistId}/songs/{songId}")
     private void deleteSongFromPlaylist(@PathVariable Long playlistId, @PathVariable Long songId) {
         songPlaylistService.deleteSongFromPlaylist(playlistId, songId);
+    }
+
+    @GetMapping("/{playlistId}/songs")
+    private ResponseEntity<PagingResult<SongDto>> getSongs(@PathVariable Long playlistId, PaginationRequest request) {
+        return ResponseEntity.ok(playlistService.getSongs(playlistId, request));
     }
 }

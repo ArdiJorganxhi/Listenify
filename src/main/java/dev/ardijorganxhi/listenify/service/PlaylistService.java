@@ -1,15 +1,16 @@
 package dev.ardijorganxhi.listenify.service;
 
 import dev.ardijorganxhi.listenify.entity.Playlist;
+import dev.ardijorganxhi.listenify.entity.Song;
 import dev.ardijorganxhi.listenify.entity.User;
 import dev.ardijorganxhi.listenify.mapper.PlaylistMapper;
+import dev.ardijorganxhi.listenify.mapper.SongMapper;
 import dev.ardijorganxhi.listenify.model.PagingResult;
 import dev.ardijorganxhi.listenify.model.dto.PlaylistDto;
+import dev.ardijorganxhi.listenify.model.dto.SongDto;
 import dev.ardijorganxhi.listenify.model.request.PaginationRequest;
 import dev.ardijorganxhi.listenify.model.request.PlaylistRequest;
-import dev.ardijorganxhi.listenify.repository.PlaylistRepository;
-import dev.ardijorganxhi.listenify.repository.PlaylistSpecification;
-import dev.ardijorganxhi.listenify.repository.UserRepository;
+import dev.ardijorganxhi.listenify.repository.*;
 import dev.ardijorganxhi.listenify.utils.PaginationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,8 @@ public class PlaylistService {
     private final PlaylistRepository playlistRepository;
     private final UserRepository userRepository;
     private final PlaylistMapper playlistMapper;
+    private final SongMapper songMapper;
+    private final SongRepository songRepository;
 
     public PagingResult<PlaylistDto> getPlaylists(Long userId, PaginationRequest request) {
         final Pageable pageable = PaginationUtils.getPageable(request.getPage(), request.getSize(), request.getDirection(), request.getSortField());
@@ -51,5 +54,18 @@ public class PlaylistService {
         Playlist playlist = playlistRepository.findById(id).orElseThrow();
         playlist.setDeleted(true);
         playlistRepository.save(playlist);
+    }
+
+    public PagingResult<SongDto> getSongs(Long playlistId, PaginationRequest request) {
+        final Pageable pageable = PaginationUtils.getPageable(request.getPage(), request.getSize(), request.getDirection(), request.getSortField());
+        final Specification<Song> specification = PlaylistSpecification.getSongs(playlistId);
+        final Page<Song> songPage = songRepository.findAll(specification, pageable);
+        final List<SongDto> playlists = songPage.stream().map(songMapper::toDto).toList();
+        return new PagingResult<>(playlists,
+                songPage.getTotalPages(),
+                songPage.getTotalElements(),
+                songPage.getSize(),
+                songPage.getNumber(),
+                songPage.isEmpty());
     }
 }

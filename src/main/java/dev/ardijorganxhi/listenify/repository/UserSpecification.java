@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.Specification;
 @NoArgsConstructor
 public class UserSpecification {
     public static Specification<User> getActiveUsers() {
+
         return (root, equal, cb) -> cb.isFalse(root.get("deleted"));
     }
 }

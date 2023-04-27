@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "songs")
@@ -25,6 +26,9 @@ public class Song {
     private String genre;
 
     private boolean deleted = false;
+
+    @OneToMany(mappedBy = "song")
+    private List<SongPlaylist> playlists;
 
    @ManyToOne
    @JoinColumn(name = "artist_id")

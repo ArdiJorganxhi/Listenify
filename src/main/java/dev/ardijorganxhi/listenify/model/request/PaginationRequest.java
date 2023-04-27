@@ -2,7 +2,6 @@ package dev.ardijorganxhi.listenify.model.request;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import net.bytebuddy.implementation.bind.annotation.Super;
 import org.springframework.data.domain.Sort;
 
 @Getter
