@@ -34,6 +34,10 @@ public class Song {
    @JoinColumn(name = "artist_id")
    private Artist artist;
 
+   @ManyToOne
+   @JoinColumn(name = "album_id")
+   private Album album;
+
 
 
 }
