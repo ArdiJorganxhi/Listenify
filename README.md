@@ -12,6 +12,7 @@ All endpoints except register and login are JWT authenticated using Spring Secur
 - Spring Boot 2.7.10
 - Spring Security 6
 - Spring Data JPA
+- PostgreSQL
 - Lombok
 - Jsonwebtoken
 
