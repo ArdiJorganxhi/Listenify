@@ -29,9 +29,9 @@ public class SongService {
     private final ArtistRepository artistRepository;
     private final SongMapper songMapper;
 
-    public PagingResult<SongDto> findAllSongs(PaginationRequest request) {
+    public PagingResult<SongDto> findAllSongs(String name, PaginationRequest request) {
         final Pageable pageable = PaginationUtils.getPageable(request.getPage(), request.getSize(), request.getDirection(), request.getSortField());
-        final Specification<Song> specification = SongSpecification.getSongs();
+        final Specification<Song> specification = SongSpecification.getSongs(name);
         final Page<Song> songPage = songRepository.findAll(specification, pageable);
         final List<SongDto> songs = songPage.stream().map(songMapper::toDto).toList();
         return new PagingResult<>(songs,

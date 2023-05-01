@@ -17,8 +17,8 @@ public class SongController {
     private final SongService songService;
 
     @GetMapping("/list")
-    private ResponseEntity<PagingResult<SongDto>> findAllArtists(PaginationRequest request) {
-        return ResponseEntity.ok(songService.findAllSongs(request));
+    private ResponseEntity<PagingResult<SongDto>> findAllArtists(@RequestParam(required = false) String name, PaginationRequest request) {
+        return ResponseEntity.ok(songService.findAllSongs(name, request));
     }
 
     @GetMapping("/{id}")

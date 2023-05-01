@@ -6,6 +6,7 @@ import dev.ardijorganxhi.listenify.entity.Song;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
@@ -28,4 +29,7 @@ public class AlbumSpecification {
             return cb.equal(albumJoin.get("id"), albumId);
         };
     }
+
+
+
 }

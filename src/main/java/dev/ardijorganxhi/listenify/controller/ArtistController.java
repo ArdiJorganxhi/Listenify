@@ -28,8 +28,8 @@ public class ArtistController {
     private final AlbumService albumService;
 
     @GetMapping("/list")
-    private ResponseEntity<PagingResult<ArtistDto>> findAllArtists(PaginationRequest request) {
-        return ResponseEntity.ok(artistService.findAllArtists(request));
+    private ResponseEntity<PagingResult<ArtistDto>> findAllArtists(@RequestParam(required = false) String name, PaginationRequest request) {
+        return ResponseEntity.ok(artistService.findAllArtists(name, request));
     }
     @PostMapping
     private void registerArtist(@RequestBody ArtistRequest request) {

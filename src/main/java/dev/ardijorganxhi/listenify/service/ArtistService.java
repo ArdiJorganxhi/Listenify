@@ -32,9 +32,9 @@ public class ArtistService {
     private final SongRepository songRepository;
     private final SongMapper songMapper;
 
-    public PagingResult<ArtistDto> findAllArtists(PaginationRequest request) {
+    public PagingResult<ArtistDto> findAllArtists(String name, PaginationRequest request) {
         final Pageable pageable = PaginationUtils.getPageable(request.getPage(), request.getSize(), request.getDirection(), request.getSortField());
-        final Specification<Artist> specification = ArtistSpecification.getArtists();
+        final Specification<Artist> specification = ArtistSpecification.getArtists(name);
         final Page<Artist> artistPage = artistRepository.findAll(specification, pageable);
         final List<ArtistDto> artists = artistPage.stream().map(artistMapper::toDto).toList();
         return new PagingResult<>(artists,
