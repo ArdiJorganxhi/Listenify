@@ -29,7 +29,7 @@ public class PlaylistController {
 
     @DeleteMapping("/{id}")
     private void deletePlaylistById(@PathVariable Long id){
-        playlistService.deletePlaylistById(id);
+        playlistService.deletePlaylistById(id, Long.valueOf(MDC.get(MdcConstant.X_USER_ID)));
     }
 
     @PostMapping("/{playlistId}/songs/{songId}")
