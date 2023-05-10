@@ -51,6 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
                 MDC.put(X_USER_ID, String.valueOf(userDetails.getId()));
 
+
             }
         }
         filterChain.doFilter(request, response);

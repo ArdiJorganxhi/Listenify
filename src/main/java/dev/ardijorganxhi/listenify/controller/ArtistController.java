@@ -18,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/artists")
 @RequiredArgsConstructor
@@ -32,7 +34,7 @@ public class ArtistController {
         return ResponseEntity.ok(artistService.findAllArtists(name, request));
     }
     @PostMapping
-    private void registerArtist(@RequestBody ArtistRequest request) {
+    private void registerArtist(@Valid @RequestBody ArtistRequest request) {
         artistService.registerArtist(request);
     }
 
@@ -47,7 +49,7 @@ public class ArtistController {
     }
 
     @PostMapping("/{id}/songs")
-    private void registerSong(@RequestBody SongRequest request, @PathVariable Long id) {
+    private void registerSong(@Valid @RequestBody SongRequest request, @PathVariable Long id) {
         songService.registerSong(request, id);
     }
 
@@ -56,7 +58,7 @@ public class ArtistController {
         return ResponseEntity.ok(artistService.findSongsByArtistId(id, request));
     }
     @PostMapping("/{id}/albums")
-    private void createAlbum(@RequestBody AlbumRequest request, @PathVariable Long id) {
+    private void createAlbum(@Valid @RequestBody AlbumRequest request, @PathVariable Long id) {
         albumService.createAlbum(request, id);
     }
 

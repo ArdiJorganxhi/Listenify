@@ -5,11 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlbumRequest {
 
+    @NotBlank(message = "Album name cannot be null.")
     private String name;
 }

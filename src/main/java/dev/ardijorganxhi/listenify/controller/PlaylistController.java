@@ -12,6 +12,8 @@ import org.slf4j.MDC;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/playlists")
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class PlaylistController {
     private final SongPlaylistService songPlaylistService;
 
     @PostMapping
-    private void createPlaylist(@RequestBody PlaylistRequest request) {
+    private void createPlaylist(@Valid @RequestBody PlaylistRequest request) {
         playlistService.createPlaylist(Long.valueOf(MDC.get(MdcConstant.X_USER_ID)), request);
     }
 
