@@ -33,7 +33,8 @@ public class PlaylistController {
     }
 
     @PostMapping("/{playlistId}/songs/{songId}")
-    private void addSongToPlaylist(@PathVariable Long playlistId, @PathVariable Long songId) {
+    private void addSongToPlaylist(@RequestHeader(MdcConstant.X_USER_ID) Long userId, @PathVariable Long playlistId, @PathVariable Long songId) {
+        System.out.println(userId);
         songPlaylistService.addSongToPlaylist(playlistId, songId);
     }
 
@@ -44,6 +45,6 @@ public class PlaylistController {
 
     @GetMapping("/{playlistId}/songs")
     private ResponseEntity<PagingResult<SongDto>> getSongs(@PathVariable Long playlistId, PaginationRequest request) {
-        return ResponseEntity.ok(playlistService.getSongs(playlistId, request));
+        return ResponseEntity.ok(playlistService.getSongs(playlistId, Long.valueOf(MDC.get(MdcConstant.X_USER_ID)), request));
     }
 }

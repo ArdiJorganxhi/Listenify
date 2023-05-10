@@ -50,15 +50,15 @@ public class PlaylistService {
         playlistRepository.save(playlist);
     }
 
-    public void deletePlaylistById(Long id){
-        Playlist playlist = playlistRepository.findById(id).orElseThrow();
+    public void deletePlaylistById(Long playlistId, Long userId){
+        Playlist playlist = playlistRepository.findByIdAndUserId(playlistId, userId).orElseThrow();
         playlist.setDeleted(true);
         playlistRepository.save(playlist);
     }
 
-    public PagingResult<SongDto> getSongs(Long playlistId, PaginationRequest request) {
+    public PagingResult<SongDto> getSongs(Long playlistId, Long userId, PaginationRequest request) {
         final Pageable pageable = PaginationUtils.getPageable(request.getPage(), request.getSize(), request.getDirection(), request.getSortField());
-        final Specification<Song> specification = PlaylistSpecification.getSongs(playlistId);
+        final Specification<Song> specification = PlaylistSpecification.getSongs(playlistId, userId);
         final Page<Song> songPage = songRepository.findAll(specification, pageable);
         final List<SongDto> playlists = songPage.stream().map(songMapper::toDto).toList();
         return new PagingResult<>(playlists,

@@ -12,6 +12,7 @@ import org.slf4j.MDC;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -24,6 +25,7 @@ public class UserController {
 
     @GetMapping("/list")
     private ResponseEntity<PagingResult<UserDto>> findAllUsers(PaginationRequest request) {
+        System.out.println("************************" + MDC.get(MdcConstant.X_USER_ID));
         return ResponseEntity.ok(userService.findAllUsers(request));
     }
 

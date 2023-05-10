@@ -24,13 +24,15 @@ public class PlaylistSpecification {
         };
     }
 
-    public static Specification<Song> getSongs(Long playlistId) {
+    public static Specification<Song> getSongs(Long playlistId, Long userId) {
         return (root, query, cb) -> {
           Join<Song, SongPlaylist> songPlaylistJoin = root.join("playlists");
           Join<SongPlaylist, Playlist> playlistJoin = songPlaylistJoin.join("playlist");
+          Join<Playlist, User> userJoin = playlistJoin.join("user");
+          Predicate userPredicate = cb.equal(userJoin.get("id"), userId);
           Predicate songPredicate = cb.equal(playlistJoin.get("id"), playlistId);
           Predicate deletedPredicate = cb.isFalse(root.get("deleted"));
-          return cb.and(songPredicate, deletedPredicate);
+          return cb.and(userPredicate, songPredicate, deletedPredicate);
         };
     }
 }
