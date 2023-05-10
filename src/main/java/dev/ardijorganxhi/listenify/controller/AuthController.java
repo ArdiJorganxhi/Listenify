@@ -19,12 +19,12 @@ public class AuthController {
 
     private final AuthService authService;
     @PostMapping("/register")
-    private void register(@Valid @RequestBody RegisterRequest request) {
+    public void register(@Valid @RequestBody RegisterRequest request) {
         authService.register(request);
     }
 
     @PostMapping("/login")
-    private ResponseEntity<String> login(@Valid @RequestBody LoginRequest request) throws Exception {
+    public ResponseEntity<String> login(@Valid @RequestBody LoginRequest request) throws Exception {
         return ResponseEntity.ok(authService.login(request));
     }
 }
