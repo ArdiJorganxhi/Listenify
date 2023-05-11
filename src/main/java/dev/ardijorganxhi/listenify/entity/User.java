@@ -12,7 +12,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
 
