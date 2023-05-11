@@ -43,7 +43,6 @@ public class SongService {
 
     }
 
-
     public void registerSong(SongRequest request, Long artistId) {
         Artist artist = artistRepository.findById(artistId).orElseThrow();
         Song song = songMapper.registerSong(request, artist);

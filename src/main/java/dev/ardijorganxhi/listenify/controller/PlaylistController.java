@@ -35,7 +35,7 @@ public class PlaylistController {
     @PostMapping("/{playlistId}/songs/{songId}")
     private void addSongToPlaylist(@RequestHeader(MdcConstant.X_USER_ID) Long userId, @PathVariable Long playlistId, @PathVariable Long songId) {
         System.out.println(userId);
-        songPlaylistService.addSongToPlaylist(playlistId, songId);
+        songPlaylistService.addSongToPlaylist(playlistId, songId, Long.valueOf(MDC.get(MdcConstant.X_USER_ID)));
     }
 
     @DeleteMapping("/{playlistId}/songs/{songId}")

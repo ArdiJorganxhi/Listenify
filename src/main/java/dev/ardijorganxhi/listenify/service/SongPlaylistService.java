@@ -22,8 +22,8 @@ public class SongPlaylistService {
     private final PlaylistMapper playlistMapper;
     private final PlaylistRepository playlistRepository;
 
-    public void addSongToPlaylist(Long playlistId, Long songId) {
-        Playlist playlist = playlistRepository.findById(playlistId).orElseThrow();
+    public void addSongToPlaylist(Long playlistId, Long songId, Long userId) {
+        Playlist playlist = playlistRepository.findByIdAndUserId(playlistId, userId).orElseThrow();
         Song song = songRepository.findById(songId).orElseThrow();
         SongPlaylist songPlaylist = playlistMapper.addSongToPlaylist(playlist, song);
         songPlaylistRepository.save(songPlaylist);

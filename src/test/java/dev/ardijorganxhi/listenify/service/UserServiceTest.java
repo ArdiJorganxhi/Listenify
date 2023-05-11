@@ -41,12 +41,7 @@ public class UserServiceTest {
     @Test
     public void it_should_find_all_users() {
 
-        PaginationRequest paginationRequest = PaginationRequest.builder()
-                .page(1)
-                .size(10)
-                .direction(Sort.Direction.ASC)
-                .sortField("id")
-                .build();
+        PaginationRequest paginationRequest = new PaginationRequest();
 
         User user1 = User.builder()
                 .id(1L)

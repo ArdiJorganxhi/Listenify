@@ -54,12 +54,7 @@ public class ArtistServiceTest {
     @Test
     public void it_should_find_all_artists() {
 
-        PaginationRequest paginationRequest = PaginationRequest.builder()
-                .page(1)
-                .size(10)
-                .direction(Sort.Direction.ASC)
-                .sortField("id")
-                .build();
+        PaginationRequest paginationRequest = new PaginationRequest();
 
         Artist artist1 = Artist.builder()
                 .id(1L)
@@ -105,12 +100,7 @@ public class ArtistServiceTest {
     @Test
     public void it_should_get_songs_by_artist_id() {
         Long artistId = 1L;
-        PaginationRequest paginationRequest = PaginationRequest.builder()
-                .page(1)
-                .size(10)
-                .direction(Sort.Direction.ASC)
-                .sortField("id")
-                .build();
+        PaginationRequest paginationRequest = new PaginationRequest();
 
         Artist artist = Artist.builder()
                 .id(artistId)
