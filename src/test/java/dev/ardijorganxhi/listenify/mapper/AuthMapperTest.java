@@ -33,9 +33,9 @@ public class AuthMapperTest {
                 .build();
 
         User user = User.builder()
-                .listenifyname("user")
-                .email("user@gmail.com")
-                .password(bCryptPasswordEncoder.encode("user123"))
+                .listenifyname(request.getListenifyname())
+                .email(request.getEmail())
+                .password(bCryptPasswordEncoder.encode(request.getPassword()))
                 .build();
 
         User result = authMapper.register(request);
