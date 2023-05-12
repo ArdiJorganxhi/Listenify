@@ -2,6 +2,7 @@ package dev.ardijorganxhi.listenify.service;
 
 import dev.ardijorganxhi.listenify.entity.Playlist;
 import dev.ardijorganxhi.listenify.entity.Song;
+import dev.ardijorganxhi.listenify.entity.SongPlaylist;
 import dev.ardijorganxhi.listenify.entity.User;
 import dev.ardijorganxhi.listenify.mapper.PlaylistMapper;
 import dev.ardijorganxhi.listenify.mapper.SongMapper;
@@ -11,6 +12,7 @@ import dev.ardijorganxhi.listenify.model.dto.SongDto;
 import dev.ardijorganxhi.listenify.model.request.PaginationRequest;
 import dev.ardijorganxhi.listenify.model.request.PlaylistRequest;
 import dev.ardijorganxhi.listenify.repository.PlaylistRepository;
+import dev.ardijorganxhi.listenify.repository.SongPlaylistRepository;
 import dev.ardijorganxhi.listenify.repository.SongRepository;
 import dev.ardijorganxhi.listenify.repository.UserRepository;
 import dev.ardijorganxhi.listenify.utils.PaginationUtils;
@@ -52,10 +54,16 @@ public class PlaylistServiceTest {
     private UserRepository userRepository;
 
     @Mock
+    private SongPlaylistRepository songPlaylistRepository;
+
+    @Mock
     private SongRepository songRepository;
 
     @InjectMocks
     private PlaylistService playlistService;
+
+    @InjectMocks
+    private SongPlaylistService songPlaylistService;
 
 
     @Test
@@ -257,6 +265,76 @@ public class PlaylistServiceTest {
         assertEquals(songPage.getTotalElements(), result.getTotalElements());
         assertEquals(songPage.getSize(), result.getSize());
         assertEquals(songPage.isEmpty(), result.isEmpty());
+    }
+
+    @Test
+    public void it_should_add_songs_to_playlist() {
+        Long playlistId = 1L;
+        Long songId = 1L;
+        Long userId = 1L;
+
+        User user = User.builder()
+                .id(userId)
+                .listenifyname("user")
+                .deleted(false)
+                .build();
+
+        Playlist playlist = Playlist.builder()
+                .id(playlistId)
+                .name("playlist")
+                .user(user)
+                .deleted(false)
+                .build();
+
+        Song song = Song.builder()
+                .id(songId)
+                .name("song")
+                .deleted(false)
+                .build();
+
+        SongPlaylist songPlaylist = SongPlaylist.builder()
+                .song(song)
+                .playlist(playlist)
+                .build();
+
+        when(playlistRepository.findByIdAndUserId(playlistId, userId)).thenReturn(Optional.of(playlist));
+        when(songRepository.findById(songId)).thenReturn(Optional.of(song));
+        when(playlistMapper.addSongToPlaylist(playlist, song)).thenReturn(songPlaylist);
+
+        songPlaylistService.addSongToPlaylist(playlistId, songId, userId);
+
+        verify(playlistRepository).findByIdAndUserId(playlistId, userId);
+        verify(playlistMapper).addSongToPlaylist(playlist, song);
+        verify(songPlaylistRepository).save(songPlaylist);
+
+    }
+
+    @Test
+    public void it_should_delete_song_from_playlist() {
+        Long playlistId = 1L;
+        Long songId = 1L;
+
+        Playlist playlist = Playlist.builder()
+                .id(playlistId)
+                .name("playlist")
+                .build();
+
+        Song song = Song.builder()
+                .id(songId)
+                .name("song")
+                .build();
+
+        SongPlaylist songPlaylist = SongPlaylist.builder()
+                .playlist(playlist)
+                .song(song)
+                .build();
+
+        when(songPlaylistRepository.findByPlaylistIdAndSongId(playlistId, songId)).thenReturn(songPlaylist);
+
+        songPlaylistService.deleteSongFromPlaylist(playlistId, songId);
+
+        assertTrue(songPlaylist.isDeleted());
+        verify(songPlaylistRepository).save(songPlaylist);
     }
 
 }
