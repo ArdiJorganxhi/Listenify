@@ -56,10 +56,10 @@ public class SongServiceTest {
                 .build();
         Song song2 = Song.builder()
                 .id(2L)
-                .name("user2")
+                .name("song2")
                 .build();
 
-        List<Song> artists = List.of(song1, song2);
+        List<Song> songs = List.of(song1, song2);
 
         SongDto songDto1 = SongDto.builder()
                 .id(song1.getId())
@@ -70,9 +70,9 @@ public class SongServiceTest {
                 .name(song2.getName())
                 .build();
 
-        List<SongDto> artistDtos = List.of(songDto1, songDto2);
+        List<SongDto> songDtos = List.of(songDto1, songDto2);
 
-        Page<Song> songPage = new PageImpl<>(artists, PaginationUtils.getPageable(paginationRequest.getPage(), paginationRequest.getSize(), paginationRequest.getDirection(), paginationRequest.getSortField()), artists.size());
+        Page<Song> songPage = new PageImpl<>(songs, PaginationUtils.getPageable(paginationRequest.getPage(), paginationRequest.getSize(), paginationRequest.getDirection(), paginationRequest.getSortField()), songs.size());
 
         when(songRepository.findAll(any(Specification.class), any(Pageable.class))).thenReturn(songPage);
 
@@ -84,7 +84,7 @@ public class SongServiceTest {
         verify(songMapper).toDto(song1);
         verify(songMapper).toDto(song2);
 
-        assertEquals(artistDtos, result.getContent());
+        assertEquals(songDtos, result.getContent());
         assertEquals(songPage.getTotalPages(), result.getTotalPages());
         assertEquals(songPage.getTotalElements(), result.getTotalElements());
         assertEquals(songPage.getSize(), result.getSize());

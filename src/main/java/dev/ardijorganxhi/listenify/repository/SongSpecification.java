@@ -21,7 +21,6 @@ public class SongSpecification {
                 return cb.like(cb.lower(root.get("name")), likePattern(name));
             }
         };
-
     }
 
     private static String likePattern(String value) {

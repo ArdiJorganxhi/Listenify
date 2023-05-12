@@ -50,6 +50,11 @@ public class PlaylistService {
         playlistRepository.save(playlist);
     }
 
+    public PlaylistDto findPlaylistById(Long playlistId, Long userId) {
+        Playlist playlist = playlistRepository.findByIdAndUserId(playlistId, userId).orElseThrow();
+        return playlistMapper.toDto(playlist);
+    }
+
     public void deletePlaylistById(Long playlistId, Long userId){
         Playlist playlist = playlistRepository.findByIdAndUserId(playlistId, userId).orElseThrow();
         playlist.setDeleted(true);

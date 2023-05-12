@@ -1,6 +1,7 @@
 package dev.ardijorganxhi.listenify.controller;
 
 import dev.ardijorganxhi.listenify.model.PagingResult;
+import dev.ardijorganxhi.listenify.model.dto.PlaylistDto;
 import dev.ardijorganxhi.listenify.model.dto.SongDto;
 import dev.ardijorganxhi.listenify.model.request.PaginationRequest;
 import dev.ardijorganxhi.listenify.model.request.PlaylistRequest;
@@ -25,6 +26,11 @@ public class PlaylistController {
     @PostMapping
     private void createPlaylist(@Valid @RequestBody PlaylistRequest request) {
         playlistService.createPlaylist(Long.valueOf(MDC.get(MdcConstant.X_USER_ID)), request);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PlaylistDto> findPlaylistById(@PathVariable Long id) {
+        return ResponseEntity.ok(playlistService.findPlaylistById(id, Long.valueOf(MDC.get(MdcConstant.X_USER_ID))));
     }
 
     @DeleteMapping("/{id}")
