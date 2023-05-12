@@ -14,9 +14,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AlbumMapper {
 
-    private final ArtistMapper artistMapper;
-    private final SongMapper songMapper;
-
     public Album createAlbum(AlbumRequest request, Artist artist) {
         return Album.builder()
                 .name(request.getName())
