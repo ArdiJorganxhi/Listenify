@@ -24,28 +24,27 @@ public class UserController {
     private final PlaylistService playlistService;
 
     @GetMapping("/list")
-    private ResponseEntity<PagingResult<UserDto>> findAllUsers(PaginationRequest request) {
-        System.out.println("************************" + MDC.get(MdcConstant.X_USER_ID));
+    public ResponseEntity<PagingResult<UserDto>> findAllUsers(PaginationRequest request) {
         return ResponseEntity.ok(userService.findAllUsers(request));
     }
 
     @GetMapping
-    private ResponseEntity<UserDto> getProfile() throws Exception {
+    public ResponseEntity<UserDto> getProfile() throws Exception {
         return ResponseEntity.ok(userService.findById(Long.valueOf(MDC.get(MdcConstant.X_USER_ID))));
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<UserDto> getUserById(@PathVariable Long id) throws Exception {
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(userService.findById(id));
     }
 
     @DeleteMapping("/{id}")
-    private void deleteUserById(@PathVariable Long id) {
+    public void deleteUserById(@PathVariable Long id) {
         userService.deleteUserById(id);
     }
 
     @GetMapping("/{id}/playlists")
-    private ResponseEntity<PagingResult<PlaylistDto>> getPlaylists(@PathVariable Long id, PaginationRequest request) {
+    public ResponseEntity<PagingResult<PlaylistDto>> getPlaylists(@PathVariable Long id, PaginationRequest request) {
         return ResponseEntity.ok(playlistService.getPlaylists(id, request));
     }
 }

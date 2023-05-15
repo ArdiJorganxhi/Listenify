@@ -12,5 +12,4 @@ import org.springframework.stereotype.Repository;
 public interface SongPlaylistRepository extends JpaRepository<SongPlaylist, Long> {
 
     SongPlaylist findByPlaylistIdAndSongId(Long playlistId, Long songId);
-    Page<Song> findSongsByPlaylist(Specification<Song> spec, Pageable pageable);
 }
