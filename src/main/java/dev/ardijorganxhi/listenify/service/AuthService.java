@@ -2,6 +2,7 @@ package dev.ardijorganxhi.listenify.service;
 
 import dev.ardijorganxhi.listenify.entity.User;
 import dev.ardijorganxhi.listenify.mapper.AuthMapper;
+import dev.ardijorganxhi.listenify.model.LoginResponse;
 import dev.ardijorganxhi.listenify.model.request.LoginRequest;
 import dev.ardijorganxhi.listenify.model.request.RegisterRequest;
 import dev.ardijorganxhi.listenify.repository.UserRepository;
@@ -24,13 +25,15 @@ public class AuthService {
         userRepository.save(user);
     }
 
-    public String login(LoginRequest request) throws Exception {
+    public LoginResponse login(LoginRequest request) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         } catch (BadCredentialsException e) {
             throw new Exception("BadCredentials");
         }
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-        return tokenService.generateToken(user);
+        return LoginResponse.builder()
+                .message(tokenService.generateToken(user))
+                .build();
     }
 }

@@ -1,5 +1,6 @@
 package dev.ardijorganxhi.listenify.controller;
 
+import dev.ardijorganxhi.listenify.model.LoginResponse;
 import dev.ardijorganxhi.listenify.model.request.LoginRequest;
 import dev.ardijorganxhi.listenify.model.request.RegisterRequest;
 import dev.ardijorganxhi.listenify.service.AuthService;
@@ -24,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody LoginRequest request) throws Exception {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) throws Exception {
         return ResponseEntity.ok(authService.login(request));
     }
 }
