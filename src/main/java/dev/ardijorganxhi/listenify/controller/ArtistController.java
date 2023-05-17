@@ -30,40 +30,40 @@ public class ArtistController {
     private final AlbumService albumService;
 
     @GetMapping("/list")
-    private ResponseEntity<PagingResult<ArtistDto>> findAllArtists(@RequestParam(required = false) String name, PaginationRequest request) {
+    public ResponseEntity<PagingResult<ArtistDto>> findAllArtists(@RequestParam(required = false) String name, PaginationRequest request) {
         return ResponseEntity.ok(artistService.findAllArtists(name, request));
     }
     @PostMapping
-    private void registerArtist(@Valid @RequestBody ArtistRequest request) {
+    public void registerArtist(@Valid @RequestBody ArtistRequest request) {
         artistService.registerArtist(request);
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<ArtistDto> getArtist(@PathVariable Long id) throws Exception {
+    public ResponseEntity<ArtistDto> getArtist(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(artistService.findById(id));
     }
 
     @DeleteMapping("/{id}")
-    private void deleteArtistById(@PathVariable Long id){
+    public void deleteArtistById(@PathVariable Long id){
         artistService.deleteById(id);
     }
 
     @PostMapping("/{id}/songs")
-    private void registerSong(@Valid @RequestBody SongRequest request, @PathVariable Long id) {
+    public void registerSong(@Valid @RequestBody SongRequest request, @PathVariable Long id) {
         songService.registerSong(request, id);
     }
 
     @GetMapping("/{id}/songs")
-    private ResponseEntity<PagingResult<SongDto>> getSongsByArtistId(@PathVariable Long id, PaginationRequest request) {
+    public ResponseEntity<PagingResult<SongDto>> getSongsByArtistId(@PathVariable Long id, PaginationRequest request) {
         return ResponseEntity.ok(artistService.findSongsByArtistId(id, request));
     }
     @PostMapping("/{id}/albums")
-    private void createAlbum(@Valid @RequestBody AlbumRequest request, @PathVariable Long id) {
+    public void createAlbum(@Valid @RequestBody AlbumRequest request, @PathVariable Long id) {
         albumService.createAlbum(request, id);
     }
 
     @GetMapping("/{id}/albums")
-    private ResponseEntity<PagingResult<AlbumDto>> getAlbumsByArtist(@PathVariable Long id, PaginationRequest request) {
+    public ResponseEntity<PagingResult<AlbumDto>> getAlbumsByArtist(@PathVariable Long id, PaginationRequest request) {
         return ResponseEntity.ok(albumService.getAlbumsByArtist(id, request));
     }
 

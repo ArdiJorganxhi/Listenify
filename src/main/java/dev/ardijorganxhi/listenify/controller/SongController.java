@@ -1,7 +1,6 @@
 package dev.ardijorganxhi.listenify.controller;
 
 import dev.ardijorganxhi.listenify.model.PagingResult;
-import dev.ardijorganxhi.listenify.model.dto.ArtistDto;
 import dev.ardijorganxhi.listenify.model.dto.SongDto;
 import dev.ardijorganxhi.listenify.model.request.PaginationRequest;
 import dev.ardijorganxhi.listenify.service.SongService;
@@ -17,17 +16,17 @@ public class SongController {
     private final SongService songService;
 
     @GetMapping("/list")
-    private ResponseEntity<PagingResult<SongDto>> findAllArtists(@RequestParam(required = false) String name, PaginationRequest request) {
+    public ResponseEntity<PagingResult<SongDto>> findAllSongs(@RequestParam(required = false) String name, PaginationRequest request) {
         return ResponseEntity.ok(songService.findAllSongs(name, request));
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<SongDto> findSongById(@PathVariable Long id) throws Exception {
+    public ResponseEntity<SongDto> findSongById(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(songService.findSongById(id));
     }
 
     @DeleteMapping("/{id}")
-    private void deleteById(@PathVariable Long id) {
+    public void deleteById(@PathVariable Long id) {
         songService.deleteById(id);
     }
 }

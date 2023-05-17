@@ -41,8 +41,6 @@ public class UserControllerTest {
 
     @Test
     public void it_should_get_all_users() {
-        Long userId = 1L;
-
         PaginationRequest request = new PaginationRequest();
 
         UserDto userDto = UserDto.builder()
