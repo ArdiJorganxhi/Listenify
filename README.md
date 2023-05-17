@@ -7,6 +7,8 @@ This API contains JPA Specification Queries together with Pagination for listing
 
 All endpoints except register and login are JWT authenticated using Spring Security 6 & JWT.
 
+This project also includes Unit Tests for services, repositories, controllers, mappers, utilities using JUnit and Mockito.
+
 # Dependecies & Tools
 
 - Spring Boot 2.7.10
