@@ -17,22 +17,20 @@ public class AlbumController {
     private final AlbumService albumService;
 
     @GetMapping("/{id}")
-    private ResponseEntity<AlbumDto> getAlbumById(@PathVariable Long id){
+    public ResponseEntity<AlbumDto> getAlbumById(@PathVariable Long id){
         return ResponseEntity.ok(albumService.getAlbumById(id));
     }
-
     @DeleteMapping("/{id}")
-    private void deleteAlbumById(@PathVariable Long id){
+    public void deleteAlbumById(@PathVariable Long id){
         albumService.deleteAlbumById(id);
     }
 
     @PostMapping("/{albumId}/songs/{songId}")
-    private void addSongsToAlbum(@PathVariable Long albumId, @PathVariable Long songId) {
+    public void addSongsToAlbum(@PathVariable Long albumId, @PathVariable Long songId) {
         albumService.addSongsToAlbum(albumId, songId);
     }
-
     @GetMapping("/{albumId}/songs")
-    private ResponseEntity<PagingResult<SongDto>> getSongsOfAlbum(@PathVariable Long albumId, PaginationRequest request) {
+    public ResponseEntity<PagingResult<SongDto>> getSongsOfAlbum(@PathVariable Long albumId, PaginationRequest request) {
         return ResponseEntity.ok(albumService.getSongsOfAlbum(albumId, request));
     }
 }

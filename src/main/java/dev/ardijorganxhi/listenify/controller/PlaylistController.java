@@ -24,7 +24,7 @@ public class PlaylistController {
     private final SongPlaylistService songPlaylistService;
 
     @PostMapping
-    private void createPlaylist(@Valid @RequestBody PlaylistRequest request) {
+    public void createPlaylist(@Valid @RequestBody PlaylistRequest request) {
         playlistService.createPlaylist(Long.valueOf(MDC.get(MdcConstant.X_USER_ID)), request);
     }
 
@@ -34,23 +34,22 @@ public class PlaylistController {
     }
 
     @DeleteMapping("/{id}")
-    private void deletePlaylistById(@PathVariable Long id){
+    public void deletePlaylistById(@PathVariable Long id){
         playlistService.deletePlaylistById(id, Long.valueOf(MDC.get(MdcConstant.X_USER_ID)));
     }
 
     @PostMapping("/{playlistId}/songs/{songId}")
-    private void addSongToPlaylist(@RequestHeader(MdcConstant.X_USER_ID) Long userId, @PathVariable Long playlistId, @PathVariable Long songId) {
-        System.out.println(userId);
+    public void addSongToPlaylist(@PathVariable Long playlistId, @PathVariable Long songId) {
         songPlaylistService.addSongToPlaylist(playlistId, songId, Long.valueOf(MDC.get(MdcConstant.X_USER_ID)));
     }
 
     @DeleteMapping("/{playlistId}/songs/{songId}")
-    private void deleteSongFromPlaylist(@PathVariable Long playlistId, @PathVariable Long songId) {
+    public void deleteSongFromPlaylist(@PathVariable Long playlistId, @PathVariable Long songId) {
         songPlaylistService.deleteSongFromPlaylist(playlistId, songId);
     }
 
     @GetMapping("/{playlistId}/songs")
-    private ResponseEntity<PagingResult<SongDto>> getSongs(@PathVariable Long playlistId, PaginationRequest request) {
+    public ResponseEntity<PagingResult<SongDto>> getSongs(@PathVariable Long playlistId, PaginationRequest request) {
         return ResponseEntity.ok(playlistService.getSongs(playlistId, Long.valueOf(MDC.get(MdcConstant.X_USER_ID)), request));
     }
 }
